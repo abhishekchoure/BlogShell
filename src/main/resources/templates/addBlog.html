@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Blogs</title>
+    <link rel="stylesheet" href="/styles.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Girassol&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="profile hide">
+  <p th:text="${currUser}"></p>
+  <hr>
+  <a class="btn-add" href="/blog/add">Write a Blog</a>
+  <a class="btn-manage" href="/blog/manage">Your Blogs</a>
+  <a class="btn-bookmark" href="/blog/bookmarks">Read List</a>
+  <hr>
+  <a class="btn-logout" th:href="@{/logout}">Logout<i class="material-icons">arrow_forward</i></a>
+</div>
+  <div class="nav-background"></div>
+<nav>
+  <h1>Blog<span class="highlight">Shell</span></h1>
+  <div class="center">Write a  <span class="highlight">Blog</span></div>
+  <ul>
+    <!--            <li>Home</li>-->
+    <!--            <li th:text="${currUser}"></li>-->
+    <li><button class="btn-profile"><i class="large material-icons">account_circle</i></button></li>
+    <!--            <li><a class="btn-logout" th:href="@{/logout}">Logout<i class="material-icons">arrow_forward</i></a></li>-->
+  </ul>
+</nav>
+  <main class="main-add-blog">
+    <div class="side">
+      <h2>What's up ?</h2>
+      <br/>
+      <div class="actions">
+        <a class="btn-add" href="/blogs"><i class="material-icons">arrow_back</i> <span>Go to Feed</span></a>
+        <a class="btn-manage" href="/blog/manage"><i class="material-icons">library_books</i> <span>Your Blogs</span></a>
+        <a class="btn-bookmark" href="/blog/bookmarks"><i class="material-icons">collections_bookmark</i> <span>Read List</span></a>
+      </div>
+    </div>
+    <div class="container-add-blog">
+      <h2>Add a Blog : </h2>
+      <form class="form-add-blog" th:action="@{/blog/add}" method="post" th:object="${blog}"  enctype="multipart/form-data">
+        <div>
+          <label>Title :</label><br/>
+          <input th:field="*{title}" type="text" name="title" required>
+        </div>
+        <br/>
+        <div>
+          <label>Category :</label><br/>
+          <select th:field="*{category}" required>
+            <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+          </select>
+        </div>
+        <br/>
+        <div>
+          <label>Description :</label><br/>
+          <pre><textarea th:field="*{description}" name="description" required/></pre>
+        </div>
+        <br/>
+        <div>
+          <label>Image :</label><br/>
+          <input type="file" name="file" accept="image/png, image/jpeg" required>
+        </div>
+        <br/>
+        <div>
+          <label>Author Name :</label><br/>
+          <input th:field="*{author}" type="text" name="author" required>
+        </div>
+        <div>
+          <br/><br/>
+          <button type="submit">Add Blog</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

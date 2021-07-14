@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Girassol&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="profile hide">
+    <p th:text="${currUser}"></p>
+    <hr>
+    <a class="btn-add" href="/blog/add">Write a Blog</a>
+    <a class="btn-manage" href="/blog/manage">Your Blogs</a>
+    <a class="btn-bookmark" href="/blog/bookmarks">Read List</a>
+    <hr>
+    <a class="btn-logout" th:href="@{/logout}">Logout<i class="material-icons">arrow_forward</i></a>
+</div>
+<div class="nav-background"></div>
+<nav>
+    <h1>Blog<span class="highlight">Shell</span></h1>
+<!--    <div class="center">Latest <span class="highlight">Feed</span></div>-->
+    <ul>
+        <!--            <li>Home</li>-->
+        <!--            <li th:text="${currUser}"></li>-->
+        <li><button class="btn-profile"><i class="large material-icons">account_circle</i></button></li>
+        <!--            <li><a class="btn-logout" th:href="@{/logout}">Logout<i class="material-icons">arrow_forward</i></a></li>-->
+    </ul>
+</nav>
+<main class="main-blog">
+    <div class="side">
+        <h2>What's up ?</h2>
+        <div class="actions">
+            <br/>
+            <a class="btn-add" href="/blogs">- Feed</a>
+            <a class="btn-manage" href="/blog/manage">- Manage your Blogs</a>
+            <a class="btn-bookmark" href="/blog/bookmarks">- Bookmarks</a>
+        </div>
+    </div>
+    <div class="sblog">
+        <div class="image-content">
+            <img class="thumbnail" th:src="@{${blog.photosImagePath}}" />
+        </div>
+        <div class="top">
+
+        </div>
+        <div class="header">
+            <div class="left-header">
+                <h2 class="title" th:text="${blog.title}"></h2>
+                <div class="category" th:text="${blog.category}"></div>
+            </div>
+            <h5 class="date" th:text="${#dates.format(blog.dateTime, 'dd MMM,yyyy HH:mm')}"></h5>
+        </div>
+        <div class="content">
+            <p class="description" th:utext="${blogDescription}"></p>
+        </div>
+
+        <div class="footer">
+            <div class="like-bookmark">
+                <div class="like">
+                    <h4 th:text="${blog.likes}"/>
+                    <a th:href="@{|/blog/like/${blog.id}}"> <i class="material-icons">thumb_up</i></a>
+                </div>
+                <div class="bookmark">
+                    <i class="material-icons">bookmark</i>
+                </div>
+            </div>
+            <div class="author">
+                <h3  class="author" th:text=" '-  ' + ${blog.author}"></h3>
+            </div>
+        </div>
+        <a class="icon-btn btn-back" href="/blogs"><i class="material-icons">arrow_back</i>Back</a>
+    </div>
+</main>
+</body>
+<script defer>
+    const popup = document.querySelector(".popup");
+    const closeBTN = document.querySelector(".btn-close");
+    const profileBTN = document.querySelector(".btn-profile");
+    const profile = document.querySelector(".profile");
+
+    if(closeBTN){
+        closeBTN.addEventListener('click',(e)=>{
+          popup.classList.add('anim');
+        });
+    }
+
+    profileBTN.addEventListener('click',(e)=>{
+         profile.classList.toggle("hide");
+    });
+
+
+     window.addEventListener('scroll',(e)=>{
+        const nav = document.querySelector('nav');
+        if(window.pageYOffset>0){
+          nav.classList.add("add-shadow");
+        }else{
+          nav.classList.remove("add-shadow");
+        }
+     });
+</script>
+</html>
